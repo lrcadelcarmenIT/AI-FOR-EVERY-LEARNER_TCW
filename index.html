@@ -444,8 +444,10 @@
       .scorebar i { transition: width 0.9s cubic-bezier(0.22, 1, 0.36, 1); }
       .crit-bars { margin-top: 20px; display: grid; gap: 10px; }
       .crit-title { font-family: "IBM Plex Mono", monospace; font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-soft); margin: 0; }
-      .crit-row { display: grid; grid-template-columns: 104px 1fr 74px; align-items: center; gap: 10px; font-size: 14px; font-weight: 600; }
-      .crit-row b { font-family: "IBM Plex Mono", monospace; font-size: 13px; text-align: right; white-space: nowrap; }
+      .crit-row { display: block; }
+      .crit-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; font-size: 14.5px; font-weight: 700; margin-bottom: 6px; }
+      .crit-head b { font-family: "IBM Plex Mono", monospace; font-size: 13px; white-space: nowrap; }
+      .crit-members { font-family: "IBM Plex Mono", monospace; font-size: 11.5px; color: var(--ink-soft); margin: 5px 0 0; letter-spacing: 0.02em; }
       .crit-track { height: 9px; background: var(--bg); border-radius: 999px; overflow: hidden; display: block; }
       .crit-track i { display: block; height: 100%; width: 0; background: var(--olive-deep); border-radius: 999px; transition: width 0.8s cubic-bezier(0.22, 1, 0.36, 1); }
 
@@ -801,14 +803,14 @@
 
         <section class="block">
           <div class="block-head"><span class="num">→</span><h3>Four places in this paper</h3></div>
-          <p>The Philippines is home: its learners face the divide, and its Department of Education runs the winning solution. The other three places are where the evidence comes from. Select a place to find it on the map.</p>
+          <p>The Philippines is home: its learners face the divide, and it is where the group proposes piloting the winning solution, Mindspark, in a school computer room. The other three places are where the evidence comes from. Select a place to find it on the map.</p>
           <div class="map-wrap">
             <div id="worldMap" role="img" aria-label="World map marking the four places in this paper: the Philippines, Ghana, Delhi in India, and South Korea, joined by a route line."></div>
             <div class="place-list" role="group" aria-label="The four places in this paper">
               <button type="button" class="place-row" data-place-row>
                 <span class="pn">1</span>
                 <span><span class="place-name">Philippines</span>
-                <span class="place-role">The problem and the response. Philippine learners face unequal access to AI-supported education, and DepEd's Project AGAP.AI is the group's winning solution.</span></span>
+                <span class="place-role">The problem at home, and where the group's fix would run. Philippine learners face unequal access to AI-supported education, and the group's proposed pilot puts Mindspark in a Philippine school computer room.</span></span>
               </button>
               <button type="button" class="place-row" data-place-row>
                 <span class="pn">2</span>
@@ -836,7 +838,7 @@
             <li><button type="button" data-goto="1"><span class="cnum">02</span><span><span class="ctitle">The Problem</span><span class="cdesc">How unequal access to AI-supported education shows up in the Philippines, and why it happens.</span></span><span class="arrow">→</span></button></li>
             <li><button type="button" data-goto="2"><span class="cnum">03</span><span><span class="ctitle">Actors &amp; Perspectives</span><span class="cdesc">What UNESCO, DepEd, the World Bank, AAMC, and CHED are doing about it.</span></span><span class="arrow">→</span></button></li>
             <li><button type="button" data-goto="3"><span class="cnum">04</span><span><span class="ctitle">The Solutions</span><span class="cdesc">Three candidate solutions, scored by the whole group against five criteria.</span></span><span class="arrow">→</span></button></li>
-            <li><button type="button" data-goto="4"><span class="cnum">05</span><span><span class="ctitle">The Winning Solution</span><span class="cdesc">AI literacy training through DepEd's Project AGAP.AI, and why it ranked first.</span></span><span class="arrow">→</span></button></li>
+            <li><button type="button" data-goto="4"><span class="cnum">05</span><span><span class="ctitle">The Winning Solution</span><span class="cdesc">Mindspark's offline adaptive learning, and why it ranked first.</span></span><span class="arrow">→</span></button></li>
             <li><button type="button" data-goto="5"><span class="cnum">06</span><span><span class="ctitle">Measuring Success</span><span class="cdesc">Success indicators, challenges, and what should happen next.</span></span><span class="arrow">→</span></button></li>
             <li><button type="button" data-goto="6"><span class="cnum">07</span><span><span class="ctitle">Signal Check</span><span class="cdesc">Three questions on the paper's own ideas about using AI well.</span></span><span class="arrow">→</span></button></li>
             <li><button type="button" data-goto="7"><span class="cnum">08</span><span><span class="ctitle">Sources &amp; Group</span><span class="cdesc">The references behind the analysis, and the group behind the work.</span></span><span class="arrow">→</span></button></li>
@@ -1018,10 +1020,10 @@
         <div class="process-steps">
           <div class="step"><b>1 · Five criteria</b><p>Each solution was scored from 1 to 4 on the same five criteria.</p></div>
           <div class="step"><b>2 · Scored independently</b><p>All three members scored every solution on their own, so no single opinion decided the ranking.</p></div>
-          <div class="step"><b>3 · Averages taken</b><p>Scores were averaged per criterion and added up, for a maximum of 20 points.</p></div>
+          <div class="step"><b>3 · Averages taken</b><p>Scores were averaged per criterion, then averaged across the five criteria, for a maximum total of 4.00.</p></div>
         </div>
         <div class="criteria-chips" aria-label="Scoring criteria">
-          <span>Driver Alignment</span><span>Effectiveness</span><span>Feasibility</span><span>Affordability</span><span>Accessibility &amp; Inclusivity</span>
+          <span>Problem Resolution &amp; Scope</span><span>Measurable Impact</span><span>Feasibility &amp; Implementation</span><span>Relevance</span><span>Time Efficiency</span>
         </div>
 
         <section class="block">
@@ -1029,18 +1031,18 @@
           <div class="sol-tabs" role="group" aria-label="Choose a solution">
             <button type="button" data-sol="0" aria-pressed="true">
               <span class="rank">Rank 1 · Winner</span>
-              <span class="name">AI Literacy Training for Students, Teachers, and Parents</span>
-              <span class="score"><span data-count="16.67" data-dec="2">16.67</span><small> / 20</small></span>
+              <span class="name">Offline Adaptive Remedial Learning at Each Student's Level (Mindspark)</span>
+              <span class="score"><span data-count="3.33" data-dec="2">3.33</span><small> / 4.00</small></span>
             </button>
             <button type="button" data-sol="1" aria-pressed="false">
               <span class="rank">Rank 2</span>
-              <span class="name">Low-Bandwidth AI Math Tutoring (Rori)</span>
-              <span class="score"><span data-count="16.17" data-dec="2">16.17</span><small> / 20</small></span>
+              <span class="name">AI Math Tutoring Through Low-Bandwidth Messaging (Rori)</span>
+              <span class="score"><span data-count="3.20" data-dec="2">3.20</span><small> / 4.00</small></span>
             </button>
             <button type="button" data-sol="2" aria-pressed="false">
               <span class="rank">Rank 3</span>
-              <span class="name">Offline Adaptive Remedial Learning (Mindspark)</span>
-              <span class="score"><span data-count="15.84" data-dec="2">15.84</span><small> / 20</small></span>
+              <span class="name">AI Literacy Training for Students, Teachers, and Parents (AGAP.AI)</span>
+              <span class="score"><span data-count="2.80" data-dec="2">2.80</span><small> / 4.00</small></span>
             </button>
           </div>
 
@@ -1048,34 +1050,34 @@
         </section>
 
         <section class="block">
-          <div class="score-chart" role="img" aria-label="Final scores out of 20. Rank 1, AI Literacy Training for Students, Teachers, and Parents, Project AGAP.AI, 16.67. Rank 2, Low-Bandwidth AI Math Tutoring, Rori, 16.17. Rank 3, Offline Adaptive Remedial Learning, Mindspark, 15.84.">
-            <h3>Final scores, out of 20</h3>
+          <div class="score-chart" role="img" aria-label="Final scores out of 4.00. Rank 1, Offline Adaptive Remedial Learning at Each Student's Level, Mindspark, 3.33. Rank 2, AI Math Tutoring Through Low-Bandwidth Messaging, Rori, 3.20. Rank 3, AI Literacy Training for Students, Teachers, and Parents, Project AGAP.AI, 2.80.">
+            <h3>Final scores, out of 4.00</h3>
             <div class="sc-row">
               <div class="sc-head">
                 <span class="sc-badge first">1</span>
-                <span class="sc-name">AI Literacy Training for Students, Teachers, and Parents (Project AGAP.AI)</span>
-                <span class="sc-score"><span data-count="16.67" data-dec="2">16.67</span></span>
+                <span class="sc-name">Offline Adaptive Remedial Learning at Each Student's Level (Mindspark)</span>
+                <span class="sc-score"><span data-count="3.33" data-dec="2">3.33</span></span>
               </div>
-              <div class="sc-track"><span class="sc-fill first" data-fill="83.4"></span></div>
+              <div class="sc-track"><span class="sc-fill first" data-fill="83.3"></span></div>
             </div>
             <div class="sc-row">
               <div class="sc-head">
                 <span class="sc-badge">2</span>
-                <span class="sc-name">Low-Bandwidth AI Math Tutoring (Rori)</span>
-                <span class="sc-score"><span data-count="16.17" data-dec="2">16.17</span></span>
+                <span class="sc-name">AI Math Tutoring Through Low-Bandwidth Messaging (Rori)</span>
+                <span class="sc-score"><span data-count="3.20" data-dec="2">3.20</span></span>
               </div>
-              <div class="sc-track"><span class="sc-fill" data-fill="80.9"></span></div>
+              <div class="sc-track"><span class="sc-fill" data-fill="80"></span></div>
             </div>
             <div class="sc-row">
               <div class="sc-head">
                 <span class="sc-badge">3</span>
-                <span class="sc-name">Offline Adaptive Remedial Learning (Mindspark)</span>
-                <span class="sc-score"><span data-count="15.84" data-dec="2">15.84</span></span>
+                <span class="sc-name">AI Literacy Training for Students, Teachers, and Parents (Project AGAP.AI)</span>
+                <span class="sc-score"><span data-count="2.80" data-dec="2">2.80</span></span>
               </div>
-              <div class="sc-track"><span class="sc-fill" data-fill="79.2"></span></div>
+              <div class="sc-track"><span class="sc-fill" data-fill="70"></span></div>
             </div>
           </div>
-          <p style="margin-top:14px; font-size:15px; color:var(--ink-soft)">The ranking was close. All three solutions scored within a point of each other, which is why the group's reasoning on the next page matters as much as the numbers.</p>
+          <p style="margin-top:14px; font-size:15px; color:var(--ink-soft)">The top two finished close, just 0.13 apart, while AGAP.AI trailed the winner by 0.53. The reasoning on the next page matters as much as the numbers.</p>
         </section>
 
         <section class="block">
@@ -1085,17 +1087,17 @@
             <div class="cmp-pick">
               <span class="cmp-label" id="cmpLabelA">Column A</span>
               <div class="cmp-btns" role="group" aria-labelledby="cmpLabelA">
-                <button type="button" data-cmp-a="0" aria-pressed="true">AGAP.AI</button>
+                <button type="button" data-cmp-a="0" aria-pressed="true">Mindspark</button>
                 <button type="button" data-cmp-a="1" aria-pressed="false">Rori</button>
-                <button type="button" data-cmp-a="2" aria-pressed="false">Mindspark</button>
+                <button type="button" data-cmp-a="2" aria-pressed="false">AGAP.AI</button>
               </div>
             </div>
             <div class="cmp-pick">
               <span class="cmp-label" id="cmpLabelB">Column B</span>
               <div class="cmp-btns" role="group" aria-labelledby="cmpLabelB">
-                <button type="button" data-cmp-b="0" aria-pressed="false">AGAP.AI</button>
+                <button type="button" data-cmp-b="0" aria-pressed="false">Mindspark</button>
                 <button type="button" data-cmp-b="1" aria-pressed="true">Rori</button>
-                <button type="button" data-cmp-b="2" aria-pressed="false">Mindspark</button>
+                <button type="button" data-cmp-b="2" aria-pressed="false">AGAP.AI</button>
               </div>
             </div>
           </div>
@@ -1108,61 +1110,85 @@
         <div class="chapter-head">
           <span class="chapter-num" aria-hidden="true">05</span>
           <p class="kicker">Chapter 05 <span class="dot">·</span> Developing the Solution</p>
-          <h2 tabindex="-1">The winner: AI literacy training</h2>
+          <h2 tabindex="-1">The winner: Mindspark</h2>
         </div>
-        <span class="rubric-tag">Project AGAP.AI · DepEd · <b>16.67 / 20 · Rank 1</b></span>
+        <span class="rubric-tag">Mindspark · Offline adaptive learning · <b>3.33 / 4.00 · Rank 1</b></span>
 
-        <p class="lede">Students, teachers, and parents learn what AI is, how to check its answers, how to spot misinformation, and how to use it safely for schoolwork. The point is AI as a study aid, not a replacement for thinking.</p>
+        <p class="lede">Mindspark is adaptive tutoring software. It adjusts practice to each learner's level and works offline, so it can reach the students the connection never does.</p>
 
         <section class="block" style="margin-top:8px">
-          <div class="block-head"><span class="num">A</span><h3>How it is being implemented</h3></div>
+          <div class="block-head"><span class="num">A</span><h3>What the evidence shows</h3></div>
           <ul class="plain-list">
-            <li>DepEd launched Project AGAP.AI in <strong>January 2026</strong>, with rollout continuing through the year.</li>
-            <li>Training runs through school sessions plus guided self-study, covering basic AI, classroom use, misinformation, ethics, and privacy.</li>
-            <li>DepEd regional offices coordinate the training and monitor how it is going.</li>
-            <li>DepEd is also pilot-testing AI tools for teaching, assessment, and school management.</li>
+            <li>Mindspark was tested in <strong>3 centers in Delhi, India</strong>, with <strong>619 students</strong>. Each session was 45 minutes on the software plus 45 minutes with an instructor (J-PAL; Muralidharan et al., 2019).</li>
+            <li>The reported cost was about <strong>US$15 per student per month</strong>. That is an old India figure, not a current Philippine price.</li>
+            <li>The study tested the full package, software plus instructor time. It does not prove the offline part alone caused the gains.</li>
           </ul>
         </section>
 
         <section class="block">
           <div class="block-head"><span class="num">B</span><h3>Why it won</h3></div>
-          <div class="grid cols-3">
+          <div class="grid cols-2">
             <div class="card stat">
               <span class="big"><span data-count="4" data-dec="2" data-final="4.0">4.0</span><em>/4</em></span>
-              <p>Feasibility score. All three members gave it a perfect 4, the only unanimous score in the evaluation.</p>
+              <p>Problem Resolution &amp; Scope. All three members scored it 4, a unanimous perfect score.</p>
             </div>
             <div class="card stat">
-              <span class="big"><span data-count="3.67" data-dec="2" data-final="3.67">3.67</span><em>/4</em></span>
-              <p>Affordability score. Training people costs far less per learner than shipping devices or licenses.</p>
+              <span class="big"><span data-count="4" data-dec="2" data-final="4.0">4.0</span><em>/4</em></span>
+              <p>Relevance. Unanimous again. Offline practice at each student's own level speaks directly to the learners this paper is about.</p>
             </div>
             <div class="card stat">
-              <span class="big">Already here</span>
-              <p>It is already running in the Philippines and fits basic education directly, unlike the two alternatives tested abroad.</p>
+              <span class="big"><span data-count="3.67" data-dec="2">3.67</span><em>/4</em></span>
+              <p>Measurable Impact. The Delhi study gives the group real results to point to, not just a plan.</p>
+            </div>
+            <div class="card stat">
+              <span class="big"><span data-count="2.33" data-dec="2">2.33</span><em>/4</em></span>
+              <p>The honest counterpoint. Feasibility &amp; Implementation was Mindspark's weakest score. Going offline does not make it free.</p>
             </div>
           </div>
         </section>
 
         <section class="block">
-          <div class="block-head"><span class="num">C</span><h3>Best practices that make it work</h3></div>
+          <div class="block-head"><span class="num">C</span><h3>The group's proposal: a one-term pilot</h3></div>
+          <ul class="plain-list">
+            <li>Run a <strong>one-term pilot</strong> in a school computer room, using the computers the school already has.</li>
+            <li>Choose students by <strong>diagnostic test</strong> plus an <strong>internet-access survey</strong>, so the pilot reaches the learners who need it most.</li>
+            <li>The <strong>teacher</strong> guides each student's turn. The <strong>ICT coordinator</strong> runs the offline setup and keeps the records. The <strong>principal</strong> approves the budget.</li>
+          </ul>
+        </section>
+
+        <section class="block">
+          <div class="block-head"><span class="num">D</span><h3>Best practices that make it work</h3></div>
           <div class="grid cols-3">
             <div class="card plain">
-              <h3>Short, hands-on tasks</h3>
-              <p>Verify an AI answer against the lesson. Find one false claim in an AI response. Declare which parts of an assignment are the student's own work.</p>
+              <h3>Test before committing</h3>
+              <p>Test the offline setup and the lessons first, and only commit once they run properly without a connection.</p>
             </div>
             <div class="card plain">
-              <h3>Works with weak connectivity</h3>
-              <p>Use shared devices or fully offline activities where the connection is poor, so the training does not exclude the learners it is meant to help.</p>
+              <h3>One teacher owns it</h3>
+              <p>One teacher owns the schedule and the explaining, so every student's turn is guided, not left to chance.</p>
             </div>
             <div class="card plain">
-              <h3>Teachers keep asking</h3>
-              <p>Teachers ask students what still confuses them about AI, and adjust. Confusion is treated as feedback, not failure.</p>
+              <h3>ICT owns the equipment</h3>
+              <p>The ICT coordinator owns the equipment and the offline setup, and keeps the records of who used it and when.</p>
+            </div>
+            <div class="card plain">
+              <h3>Share the computers</h3>
+              <p>Use the existing school computers in turns, so one machine serves many learners across the day.</p>
+            </div>
+            <div class="card plain">
+              <h3>A proper license</h3>
+              <p>Use a proper school license for the software, paid from the school budget.</p>
+            </div>
+            <div class="card plain">
+              <h3>Turns for the disconnected</h3>
+              <p>Reserve individual turns for students with no internet at home, the learners the divide hits hardest.</p>
             </div>
           </div>
         </section>
 
         <div class="caveat">
-          <h3>An honest caveat</h3>
-          <p>AGAP.AI's target of up to <strong>1.5 million participants</strong> is a planned target, not a measured result. The program is new, and its effectiveness has <strong>not yet been established</strong> through a reported evaluation. The group ranked it first on feasibility, affordability, and fit, not on proven learning outcomes.</p>
+          <h3>Challenges, honestly</h3>
+          <p>Devices, electricity, repairs, licenses, and teacher support still cost money, even when the software runs offline. Lessons in the wrong language and too little practice time are real risks. And a progress bar inside the software must not be mistaken for real understanding. The pilot has to measure learning itself, not just usage.</p>
         </div>
       </section>
 
@@ -1174,38 +1200,39 @@
           <h2 tabindex="-1">Measuring success</h2>
         </div>
         <span class="rubric-tag">Rubric · Assessing the Solution · <b>8 pts</b></span>
-        <p class="lede">A solution is only defensible if success can be checked. These are the indicators the group would use, following the SMART principle.</p>
+        <p class="lede">A solution is only defensible if success can be checked. These are the indicators the group would use for the Mindspark pilot, following the SMART principle, and built only from things a school can actually measure.</p>
 
         <section class="block" style="margin-top:8px">
           <div class="block-head"><span class="num">A</span><h3>Success indicators</h3></div>
           <div class="grid cols-2">
             <div class="card">
-              <h3>Students can verify AI</h3>
-              <p>The percentage of participating students who can check an AI answer against their lesson material and judge whether it is right.</p>
+              <h3>Diagnostic test results</h3>
+              <p>Students take a diagnostic test before the pilot and again at the end of the term. Gains are measured against each learner's own starting level, the same test that helped choose who joins.</p>
             </div>
             <div class="card">
-              <h3>Teachers complete training</h3>
-              <p>The number of teachers who finish the AI literacy training and use it in their classes.</p>
+              <h3>Usage and turn records</h3>
+              <p>The ICT coordinator's records show which students got their turns and how much practice time each learner actually had.</p>
             </div>
             <div class="card">
-              <h3>Underserved schools take part</h3>
-              <p>Participation rates in underserved schools, so the program is measured by who it reaches, not just how many.</p>
+              <h3>Real cost per student</h3>
+              <p>The school tracks what the pilot truly costs per student, licenses, electricity, and repairs included, instead of relying on the old India figure of about US$15.</p>
             </div>
             <div class="card">
-              <h3>Learning gains, where evaluated</h3>
-              <p>Measured learning gains in schools where outcomes are formally evaluated, once evaluation data exists.</p>
+              <h3>Turns reach the disconnected</h3>
+              <p>Records show whether individual turns went to the students the internet-access survey flagged as having no internet at home.</p>
             </div>
           </div>
-          <p style="margin-top:16px"><strong>How monitoring works.</strong> DepEd regional offices coordinate and monitor the training. DepEd's pilot testing of AI tools runs alongside it. Schools track both accessibility (who can actually join) and effectiveness (what participants learn).</p>
+          <p style="margin-top:16px"><strong>How monitoring works.</strong> The teacher owns the schedule and guides each student's turn. The ICT coordinator runs the offline setup and keeps the usage records. The principal approves the budget. What the software's progress bars show is a guide only. The diagnostic results are the measure that counts.</p>
         </section>
 
         <section class="block">
           <div class="block-head"><span class="num">B</span><h3>Challenges</h3></div>
           <ul class="plain-list">
-            <li>Learners without stable internet or a device still struggle to join sessions.</li>
-            <li>Teachers need time and their own training first, before they can guide students.</li>
-            <li>AGAP.AI has no completed effectiveness evaluation yet, so its impact is still unproven.</li>
-            <li>The runner-up options have their own limits. Rori still needs a working signal and a compatible device. Mindspark still needs devices, electricity, maintenance, and licenses.</li>
+            <li>Devices, electricity, repairs, licenses, and teacher support still cost money, even though the software works offline.</li>
+            <li>Lessons in the wrong language, or too little practice time per student, can quietly cancel out the benefit.</li>
+            <li>Progress bars inside the software can be mistaken for real understanding. Only the diagnostic results show learning.</li>
+            <li>The Delhi study tested the full package of software plus instructor time, so the offline part alone is not proven.</li>
+            <li>The other options have their own limits. Rori still needs a working signal and a compatible device. AGAP.AI's effectiveness has not yet been established through a reported evaluation.</li>
           </ul>
         </section>
 
@@ -1213,26 +1240,26 @@
           <div class="block-head"><span class="num">C</span><h3>Opportunities</h3></div>
           <div class="grid cols-3">
             <div class="card plain">
+              <h3>Start in one computer room</h3>
+              <p>The pilot runs on computers the school already owns, in turns, so it can begin without buying a device for every learner.</p>
+            </div>
+            <div class="card plain">
               <h3>Pair it with connectivity</h3>
-              <p>Combine the training with World Bank-backed school connectivity projects, so skills and access grow together.</p>
+              <p>Combine the pilot with World Bank-backed school connectivity projects, so access and guided practice grow together.</p>
             </div>
             <div class="card plain">
-              <h3>Share the devices</h3>
-              <p>Shared-device pools and loan-device programs let one device serve many learners.</p>
-            </div>
-            <div class="card plain">
-              <h3>Keep an offline path</h3>
-              <p>Offline alternatives keep learners in the program when the connection fails.</p>
+              <h3>Widen only on evidence</h3>
+              <p>If the diagnostic results show real gains, the same setup can extend to more classes and schools, one computer room at a time.</p>
             </div>
           </div>
         </section>
 
         <section class="block">
-          <div class="block-head"><span class="num">D</span><h3>Recommendations for DepEd</h3></div>
+          <div class="block-head"><span class="num">D</span><h3>Recommendations</h3></div>
           <ul class="plain-list">
-            <li>Prioritize underserved schools when allocating connectivity and devices.</li>
-            <li>Provide offline learning alternatives alongside every connected activity.</li>
-            <li>Establish monitoring mechanisms that track both accessibility and effectiveness, and publish what they find.</li>
+            <li>Test the offline setup and the lessons before committing the school budget.</li>
+            <li>Publish the pilot's diagnostic results and its real cost per student, so the decision to expand rests on evidence.</li>
+            <li>Prioritize students with no internet at home when individual turns are assigned.</li>
           </ul>
         </section>
 
@@ -1536,29 +1563,49 @@
         /* ---------- Solution explorer ---------- */
         var solutions = [
           {
-            name: 'AI Literacy Training for Students, Teachers, and Parents',
-            who: 'DepEd · Project AGAP.AI · Philippines',
-            score: 16.67,
-            pct: 83.4,
-            body: 'A national training program that teaches students, teachers, and parents what AI is, how to verify its answers, how to spot misinformation, and how to use it safely and ethically for schoolwork.',
-            crits: [['Feasibility', 4.0], ['Affordability', 3.67]],
-            facts: ['Feasibility was unanimous, all three members scored it 4', 'Already running in PH basic education', 'Launched January 2026']
+            name: 'Offline Adaptive Remedial Learning at Each Student\'s Level (Mindspark)',
+            who: 'Mindspark · tested in Delhi, India',
+            score: 3.33,
+            pct: 83.3,
+            body: 'Adaptive software that adjusts practice to each student\'s level and works offline. It was tested in 3 centers in Delhi, India with 619 students, who spent 45 minutes on the software plus 45 minutes with an instructor per session.',
+            crits: [
+              { name: 'Problem Resolution & Scope', avg: 4.00, a: 4, d: 4, e: 4 },
+              { name: 'Measurable Impact', avg: 3.67, a: 3, d: 4, e: 4 },
+              { name: 'Feasibility & Implementation', avg: 2.33, a: 2, d: 2, e: 3 },
+              { name: 'Relevance', avg: 4.00, a: 4, d: 4, e: 4 },
+              { name: 'Time Efficiency', avg: 2.67, a: 2, d: 3, e: 3 }
+            ],
+            facts: ['619 students, 3 centers in Delhi', '45 min software + 45 min instructor', 'About US$15 per student per month, an old India figure', 'Needs devices, electricity, repairs, licenses']
           },
           {
-            name: 'Low-Bandwidth AI Math Tutoring (Rori)',
+            name: 'AI Math Tutoring Through Low-Bandwidth Messaging (Rori)',
             who: 'Rori tutor via WhatsApp · tested in Ghana',
-            score: 16.17,
-            pct: 80.9,
+            score: 3.20,
+            pct: 80.0,
             body: 'An AI math tutor that works over WhatsApp, so it runs on low bandwidth and basic phones. It was tested in 11 Rising Academies schools in Ghana, with two supervised 30-minute sessions a week over 8 months.',
+            crits: [
+              { name: 'Problem Resolution & Scope', avg: 3.67, a: 3, d: 4, e: 4 },
+              { name: 'Measurable Impact', avg: 3.67, a: 4, d: 3, e: 4 },
+              { name: 'Feasibility & Implementation', avg: 2.67, a: 2, d: 3, e: 3 },
+              { name: 'Relevance', avg: 3.67, a: 3, d: 4, e: 4 },
+              { name: 'Time Efficiency', avg: 2.33, a: 2, d: 3, e: 2 }
+            ],
             facts: ['Effect size 0.36 SD (p < .001)', 'About US$5 per learner per year at scale', '11 schools, Ghana (Henkel et al., 2024)', 'Needs a working signal and a compatible device']
           },
           {
-            name: 'Offline Adaptive Remedial Learning (Mindspark)',
-            who: 'Mindspark · tested in Delhi, India',
-            score: 15.84,
-            pct: 79.2,
-            body: 'Adaptive software that adjusts practice to each student\'s level and works offline. In the Delhi study with 619 students, learners did 45 minutes of adaptive practice plus 45 minutes of instructor support per session.',
-            facts: ['619 students, Delhi', '45 min practice + 45 min instructor support', 'About US$15 per learner per month', 'Needs devices, electricity, maintenance, licenses']
+            name: 'AI Literacy Training for Students, Teachers, and Parents (AGAP.AI)',
+            who: 'DepEd · Project AGAP.AI · Philippines',
+            score: 2.80,
+            pct: 70.0,
+            body: 'A national training program that teaches students, teachers, and parents what AI is, how to verify its answers, how to spot misinformation, and how to use it safely and ethically for schoolwork.',
+            crits: [
+              { name: 'Problem Resolution & Scope', avg: 2.67, a: 3, d: 3, e: 2 },
+              { name: 'Measurable Impact', avg: 2.33, a: 2, d: 3, e: 2 },
+              { name: 'Feasibility & Implementation', avg: 3.67, a: 3, d: 4, e: 4 },
+              { name: 'Relevance', avg: 2.67, a: 3, d: 3, e: 2 },
+              { name: 'Time Efficiency', avg: 2.67, a: 2, d: 3, e: 3 }
+            ],
+            facts: ['Launched January 2026', 'Already running in PH basic education', 'Feasibility & Implementation was its strongest criterion at 3.67', 'Effectiveness not yet established by a reported evaluation']
           }
         ];
         var panel = document.getElementById('solPanel');
@@ -1572,12 +1619,15 @@
           }
           var critsHtml = '';
           if (s.crits) {
-            critsHtml = '<div class="crit-bars"><p class="crit-title">Criterion scores from the group evaluation</p>';
+            critsHtml = '<div class="crit-bars"><p class="crit-title">Criterion scores from the Week 8 Worksheet · A Alawi · D Del Carmen · E Eronico</p>';
             for (var c = 0; c < s.crits.length; c++) {
+              var cr = s.crits[c];
               critsHtml +=
-                '<div class="crit-row"><span>' + s.crits[c][0] + '</span>' +
-                '<span class="crit-track"><i data-fill="' + (s.crits[c][1] / 4 * 100).toFixed(1) + '"></i></span>' +
-                '<b><span data-count="' + s.crits[c][1] + '" data-dec="2">' + s.crits[c][1].toFixed(2) + '</span> / 4</b></div>';
+                '<div class="crit-row">' +
+                '<div class="crit-head"><span>' + cr.name + '</span>' +
+                '<b><span data-count="' + cr.avg + '" data-dec="2">' + cr.avg.toFixed(2) + '</span> / 4</b></div>' +
+                '<span class="crit-track"><i data-fill="' + (cr.avg / 4 * 100).toFixed(1) + '"></i></span>' +
+                '<p class="crit-members">Alawi ' + cr.a + ' · Del Carmen ' + cr.d + ' · Eronico ' + cr.e + '</p></div>';
             }
             critsHtml += '</div>';
           }
@@ -1586,7 +1636,7 @@
             '<p class="who">' + s.who + '</p>' +
             '<p>' + s.body + '</p>' +
             '<div class="scorebar" aria-hidden="true"><i data-fill="' + s.pct + '"></i></div>' +
-            '<span class="scorebar-label">Group score <span data-count="' + s.score + '" data-dec="2">' + s.score.toFixed(2) + '</span> / 20 · Rank ' + (idx + 1) + ' of 3</span>' +
+            '<span class="scorebar-label">Group score <span data-count="' + s.score + '" data-dec="2">' + s.score.toFixed(2) + '</span> / 4.00 · Rank ' + (idx + 1) + ' of 3</span>' +
             critsHtml +
             '<div class="fact-row">' + factsHtml + '</div>';
           for (var b = 0; b < solBtns.length; b++) {
@@ -1660,25 +1710,28 @@
         /* ---------- Head-to-head compare ---------- */
         var compareData = [
           {
-            short: 'AGAP.AI', name: 'AI Literacy Training for Students, Teachers, and Parents (Project AGAP.AI)',
-            rank: 1, score: '16.67', pct: 83.4,
-            cost: 'Rollout funded by DepEd. Training people costs far less per learner than shipping devices or licenses.',
-            evidence: 'Philippine rollout. DepEd launched Project AGAP.AI in January 2026. Its effectiveness has not yet been established through a reported evaluation.',
-            verdict: 'Ranked first on feasibility, affordability, and fit, not on proven learning outcomes.'
+            short: 'Mindspark', name: 'Offline Adaptive Remedial Learning at Each Student\'s Level (Mindspark)',
+            rank: 1, score: '3.33', pct: 83.3,
+            cost: 'About US$15 per student per month, an old India figure, not a current Philippine price. Devices, electricity, repairs, and licenses add to it.',
+            evidence: 'Tested in 3 centers in Delhi, India with 619 students: 45 minutes on the software plus 45 minutes with an instructor per session. The study tested the full package, not the offline part alone.',
+            top: 'Problem Resolution & Scope and Relevance, both 4.00, with all three members scoring 4 on each.',
+            verdict: 'Ranked first on two unanimous criteria, even though Feasibility & Implementation was its weakest score at 2.33.'
           },
           {
-            short: 'Rori', name: 'Low-Bandwidth AI Math Tutoring (Rori)',
-            rank: 2, score: '16.17', pct: 80.9,
+            short: 'Rori', name: 'AI Math Tutoring Through Low-Bandwidth Messaging (Rori)',
+            rank: 2, score: '3.20', pct: 80.0,
             cost: 'About US$5 per learner per year at scale.',
             evidence: 'Tested in 11 Rising Academies schools in Ghana, with an effect size of 0.36 SD (p < .001).',
-            verdict: 'Proven learning gains abroad at low cost, but it still needs a working signal and a compatible device.'
+            top: 'Problem Resolution & Scope, Measurable Impact, and Relevance, all at 3.67.',
+            verdict: 'Steady across the board, but Time Efficiency was its weakest criterion at 2.33, and it still needs a working signal and a compatible device.'
           },
           {
-            short: 'Mindspark', name: 'Offline Adaptive Remedial Learning (Mindspark)',
-            rank: 3, score: '15.84', pct: 79.2,
-            cost: 'About US$15 per learner per month.',
-            evidence: 'Studied with 619 students in Delhi, India, using 45 minutes of adaptive practice plus 45 minutes of instructor support per session.',
-            verdict: 'Strong adaptive learning evidence, but it still needs devices, electricity, maintenance, and licenses.'
+            short: 'AGAP.AI', name: 'AI Literacy Training for Students, Teachers, and Parents (Project AGAP.AI)',
+            rank: 3, score: '2.80', pct: 70.0,
+            cost: 'Rollout funded by DepEd. Training people costs far less per learner than shipping devices or licenses.',
+            evidence: 'Philippine rollout. DepEd launched Project AGAP.AI in January 2026. Its effectiveness has not yet been established through a reported evaluation.',
+            top: 'Feasibility & Implementation at 3.67, its strongest criterion by a full point.',
+            verdict: 'The easiest of the three to implement, but the group scored its Measurable Impact lowest of all at 2.33.'
           }
         ];
         var cmpGrid = document.getElementById('cmpGrid');
@@ -1690,10 +1743,11 @@
           return '<div class="cmp-col">' +
             '<div class="cmp-head"><span class="sc-badge' + (d.rank === 1 ? ' first' : '') + '">' + d.rank + '</span>' +
             '<span class="cmp-name">' + d.name + '</span></div>' +
-            '<div class="cmp-score"><span data-count="' + d.score + '" data-dec="2">' + d.score + '</span><small> / 20 · Rank ' + d.rank + ' of 3</small></div>' +
+            '<div class="cmp-score"><span data-count="' + d.score + '" data-dec="2">' + d.score + '</span><small> / 4.00 · Rank ' + d.rank + ' of 3</small></div>' +
             '<div class="sc-track"><span class="sc-fill' + (d.rank === 1 ? ' first' : '') + '" data-fill="' + d.pct + '"></span></div>' +
             '<div class="cmp-row"><span class="k">Cost</span><p>' + d.cost + '</p></div>' +
             '<div class="cmp-row"><span class="k">Evidence</span><p>' + d.evidence + '</p></div>' +
+            '<div class="cmp-row"><span class="k">Strongest criterion</span><p>' + d.top + '</p></div>' +
             '<div class="cmp-row"><span class="k">Verdict</span><p>' + d.verdict + '</p></div>' +
             '</div>';
         }

@@ -747,6 +747,12 @@
         display: flex; align-items: center; justify-content: center; cursor: pointer;
       }
       .pin--on { background: var(--violet); color: #FFFFFF; box-shadow: 0 0 18px rgba(139, 124, 255, 0.85); }
+      .pin { transition: transform 0.12s ease; }
+      #worldMap .maplibregl-marker { cursor: pointer; }
+      #worldMap .maplibregl-marker:focus { outline: none; }
+      #worldMap .maplibregl-marker:focus-visible .pin { outline: 3px solid var(--cyan); outline-offset: 2px; }
+      #worldMap .maplibregl-marker:active .pin { transform: scale(0.88); }
+      @media (prefers-reduced-motion: reduce) { .pin { transition: none; } }
     </style>
   </head>
   <body>
@@ -805,7 +811,7 @@
           <div class="block-head"><span class="num">→</span><h3>Four places in this paper</h3></div>
           <p>The Philippines is home: its learners face the divide, and it is where the group proposes piloting the winning solution, Mindspark, in a school computer room. The other three places are where the evidence comes from. Select a place to find it on the map.</p>
           <div class="map-wrap">
-            <div id="worldMap" role="img" aria-label="World map marking the four places in this paper: the Philippines, Ghana, Delhi in India, and South Korea, joined by a route line."></div>
+            <div id="worldMap" role="group" aria-label="World map marking the four places in this paper: the Philippines, Ghana, Delhi in India, and South Korea, joined by a route line."></div>
             <div class="place-list" role="group" aria-label="The four places in this paper">
               <button type="button" class="place-row" data-place-row>
                 <span class="pn">1</span>
@@ -1900,7 +1906,7 @@
             type: 'FeatureCollection',
             features: [{
               type: 'Feature', properties: {},
-              geometry: { type: 'LineString', coordinates: [[-0.23262, 5.57888], [77.21688, 28.63412], [120.98626, 14.60488], [126.99989, 37.55886]] }
+              geometry: { type: 'LineString', coordinates: [[126.99989, 37.55886], [120.98626, 14.60488], [117.5, 4], [111, -8], [97, -12], [82, -13], [66, -12], [56, -11], [50, -5], [44, -11], [41, -18], [37, -24], [32, -29], [23, -33.5], [18.6, -33.8], [14.5, -26], [12.5, -16], [12, -6], [9.5, 0.5], [6, 4.2], [2.5, 5.8], [-0.23262, 5.57888], [77.21688, 28.63412]] }
             }]
           };
           try {
@@ -1915,6 +1921,77 @@
               }]
             }, fallback);
           } catch (e) { fallback(); }
+
+          /* Pins: on a real mouse or touch press the map library selects the
+             pin, then its own background-click handler instantly deselects it
+             again, so a tap looks dead. Selection is therefore owned here:
+             a capture-phase handler stops that cancellation, the choice is
+             re-asserted once the press settles, and each pin becomes a real
+             keyboard-operable button. */
+          if (worldMapHandle) {
+            var pinMarkers = [];
+            var pressStart = null;
+            var applySelection = function (i, scroll) {
+              if (worldMapHandle.selectPlace) worldMapHandle.selectPlace(i);
+              rows.forEach(function (row, j) { row.classList.toggle('map-selected', j === i); });
+              if (scroll && rows[i]) rows[i].scrollIntoView({ block: 'nearest' });
+              pinMarkers.forEach(function (m, j) { if (m) m.setAttribute('aria-pressed', j === i ? 'true' : 'false'); });
+            };
+            var enhanceMarker = function (marker, idx) {
+              if (marker.getAttribute('data-pin-ready')) return;
+              var n = parseInt(marker.textContent, 10);
+              var i = isNaN(n) ? idx : n - 1;
+              if (!places[i]) return;
+              marker.setAttribute('data-pin-ready', '1');
+              marker.tabIndex = 0;
+              marker.setAttribute('role', 'button');
+              marker.setAttribute('aria-label', 'Select ' + places[i].label + ' (place ' + (i + 1) + ' of ' + places.length + ')');
+              marker.setAttribute('aria-pressed', 'false');
+              pinMarkers[i] = marker;
+              marker.addEventListener('pointerdown', function (e) {
+                pressStart = { i: i, x: e.clientX, y: e.clientY };
+              }, true);
+              marker.addEventListener('click', function (e) {
+                e.stopPropagation();
+                applySelection(i, true);
+                window.setTimeout(function () { applySelection(i, false); }, 0);
+              }, true);
+              marker.addEventListener('keydown', function (e) {
+                if (e.key === 'Enter' || e.key === ' ' || e.key === 'Spacebar') {
+                  e.preventDefault();
+                  applySelection(i, true);
+                }
+              });
+            };
+            var scanMarkers = function () {
+              Array.prototype.forEach.call(mapEl.querySelectorAll('.maplibregl-marker'), function (m, idx) { enhanceMarker(m, idx); });
+            };
+            scanMarkers();
+            /* A press that slips a few pixels becomes a tiny map drag and the
+               browser swallows the click entirely. If a press began on a pin
+               and ends within a short distance, it still counts as a tap. */
+            window.addEventListener('pointerup', function (e) {
+              if (!pressStart) return;
+              var dx = e.clientX - pressStart.x, dy = e.clientY - pressStart.y;
+              var pi = pressStart.i;
+              pressStart = null;
+              if (dx * dx + dy * dy <= 144) {
+                applySelection(pi, true);
+                window.setTimeout(function () { applySelection(pi, false); }, 0);
+              }
+            }, true);
+            window.addEventListener('pointercancel', function () { pressStart = null; }, true);
+            if (window.MutationObserver) {
+              new MutationObserver(scanMarkers).observe(mapEl, { childList: true, subtree: true });
+              /* Keep aria-pressed honest when selection changes by another
+                 route: a place-card click, or a press on empty map clearing it. */
+              new MutationObserver(function () {
+                var sel = -1;
+                rows.forEach(function (row, j) { if (row.classList.contains('map-selected')) sel = j; });
+                pinMarkers.forEach(function (m, j) { if (m) m.setAttribute('aria-pressed', j === sel ? 'true' : 'false'); });
+              }).observe(mapEl.parentNode, { attributes: true, attributeFilter: ['class'], subtree: true });
+            }
+          }
         })();
 
         showPage(0);

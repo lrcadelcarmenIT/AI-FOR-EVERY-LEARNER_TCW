@@ -753,6 +753,10 @@
       #worldMap .maplibregl-marker:focus-visible .pin { outline: 3px solid var(--cyan); outline-offset: 2px; }
       #worldMap .maplibregl-marker:active .pin { transform: scale(0.88); }
       @media (prefers-reduced-motion: reduce) { .pin { transition: none; } }
+      .photo-fig { margin: 26px 0; border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; background: var(--bg-soft); }
+      .photo-fig img { display: block; width: 100%; height: auto; }
+      .photo-fig figcaption { padding: 12px 16px; font-size: 14px; line-height: 1.55; color: var(--ink-soft); border-top: 1px solid var(--line); }
+      .actor-logo { display: block; height: 48px; width: auto; max-width: 190px; object-fit: contain; background: #fff; padding: 7px 12px; border-radius: 8px; margin-bottom: 14px; }
     </style>
   </head>
   <body>
@@ -796,6 +800,11 @@
           </div>
           <p class="subtitle">Unequal access to AI-supported education as a digital divide issue. A clear analysis of the problem, a justified solution, and defined measures of success.</p>
         </div>
+
+        <figure class="photo-fig">
+          <img src="https://lh3.googleusercontent.com/d/18wDU4hyr_SUrWoGQk-INQoaarYPud_dT" alt="An older man and a young boy looking at a laptop together outdoors" loading="lazy" referrerpolicy="no-referrer">
+          <figcaption>One shared laptop, two generations. For the disconnected learner, this is what access looks like when it arrives at all.</figcaption>
+        </figure>
 
         <div class="group-card">
           <h3>Group 8</h3>
@@ -890,11 +899,21 @@
             <span class="src">ITU, 2025b</span>
           </div>
         </div>
+        <figure class="photo-fig">
+          <img src="https://lh3.googleusercontent.com/d/1WkNpvzeKaCLPWHafLLua3iRj9u9RnL07" alt="ITU chart of internet use in urban and rural areas in 2025, showing 85 percent urban and 58 percent rural worldwide" loading="lazy" referrerpolicy="no-referrer">
+          <figcaption>Internet use in urban and rural areas, 2025. The ITU figures behind the bars above, 85 percent urban against 58 percent rural.</figcaption>
+        </figure>
+
         <div class="card plain" style="margin-top:14px;">
           <h3>3 barriers keep households offline</h3>
           <p style="margin:0;">Cost, speed, and digital skills remain the top barriers to internet use in Philippine households.</p>
           <span class="src-line">2024 National ICT Household Survey, via PIA (Bagumbaran, 2025)</span>
         </div>
+
+        <figure class="photo-fig">
+          <img src="https://lh3.googleusercontent.com/d/1_E_OzLVYzf39rbDketA4NPllty2_diZw" alt="A group of students in uniform gathered around one shared laptop" loading="lazy" referrerpolicy="no-referrer">
+          <figcaption>Learners sharing one laptop. Where devices are scarce, a whole group crowds around a single screen.</figcaption>
+        </figure>
 
         <section class="block">
           <div class="block-head"><span class="num">→</span><h3>A day with two learners</h3></div>
@@ -985,26 +1004,36 @@
 
         <div class="grid cols-2">
           <div class="card">
+            <img class="actor-logo" src="https://lh3.googleusercontent.com/d/1iiQn2uCwbQE78MKzhr5mdvsU9aEqJxzS" alt="UNESCO logo" loading="lazy" referrerpolicy="no-referrer">
             <h3>UNESCO</h3>
             <p>Pushes for fair, human-centered AI in education. It works to protect learners' rights, and warns that AI can deepen existing gaps if access and guidance are unequal.</p>
           </div>
           <div class="card">
+            <img class="actor-logo" src="https://lh3.googleusercontent.com/d/1l_wWQXRkMlBq2TjujVuoizdrtRJFCfwk" alt="Department of Education logo" loading="lazy" referrerpolicy="no-referrer">
             <h3>DepEd</h3>
             <p>The Department of Education trains students, teachers, and parents on AI through Project AGAP.AI, its national AI literacy program for basic education.</p>
           </div>
           <div class="card">
+            <img class="actor-logo" src="https://lh3.googleusercontent.com/d/1GxAFeroUbXQIL7jpkqm_M7Sl1B2ETVxU" alt="World Bank Group logo" loading="lazy" referrerpolicy="no-referrer">
             <h3>World Bank Group</h3>
             <p>Works to expand internet access and lower connection costs in the Philippines, addressing the connectivity side of the divide.</p>
           </div>
           <div class="card">
+            <img class="actor-logo" src="https://lh3.googleusercontent.com/d/10OLbzcwIhrcubCG9YDbAy1UAndmmLmPS" alt="AAMC logo" loading="lazy" referrerpolicy="no-referrer">
             <h3>AAMC</h3>
             <p>The Association of American Medical Colleges calls for equal AI access for all learners, so the benefits of AI in education are not limited to a few.</p>
           </div>
           <div class="card">
+            <img class="actor-logo" src="https://lh3.googleusercontent.com/d/1W6YMU4XxRejQe4dIpGj6Zey_R86VgO9o" alt="Commission on Higher Education logo" loading="lazy" referrerpolicy="no-referrer">
             <h3>CHED</h3>
             <p>The Commission on Higher Education sets guidelines for the responsible use of AI in colleges and universities.</p>
           </div>
         </div>
+
+        <figure class="photo-fig">
+          <img src="https://lh3.googleusercontent.com/d/1afRANDB8OnHUri6c-9M0ztLG9Jp1GrLg" alt="DepEd officials visiting a school while students work on laptops" loading="lazy" referrerpolicy="no-referrer">
+          <figcaption>DepEd in schools. Program visits put officials, teachers, and students around the same laptops.</figcaption>
+        </figure>
 
         <div class="contrast-note">
           <span class="tag clay">A working contrast · South Korea</span>
@@ -1160,6 +1189,11 @@
             <li>Choose students by <strong>diagnostic test</strong> plus an <strong>internet-access survey</strong>, so the pilot reaches the learners who need it most.</li>
             <li>The <strong>teacher</strong> guides each student's turn. The <strong>ICT coordinator</strong> runs the offline setup and keeps the records. The <strong>principal</strong> approves the budget.</li>
           </ul>
+          <figure class="photo-fig">
+            <img src="https://lh3.googleusercontent.com/d/1I8txTiK2fZ1U7gd8p7_UPnV1miA9FWt1" alt="A school staff member working on a laptop and monitor at a school office" loading="lazy" referrerpolicy="no-referrer">
+            <figcaption>A school staff member keeping records on a laptop. In the group’s pilot, records like these track who got a turn and what it cost.</figcaption>
+          </figure>
+
         </section>
 
         <section class="block">
@@ -1289,6 +1323,11 @@
           <h2 tabindex="-1">Signal check</h2>
         </div>
         <p class="lede">Three questions drawn from this paper's own argument about using AI well. Tap an answer to check it on the spot. This is an illustration of the paper's concepts, built from the group's analysis. It is not a test, and nothing here is graded.</p>
+
+        <figure class="photo-fig">
+          <img src="https://lh3.googleusercontent.com/d/1A4esNsg2r8OYnT11GlpKyZFkj856k04T" alt="A laptop with holographic AI data panels floating above it" loading="lazy" referrerpolicy="no-referrer">
+          <figcaption>AI tools promise a personal tutor for every learner. The paper keeps asking who actually gets to use one.</figcaption>
+        </figure>
 
         <div class="quiz-card">
           <div class="quiz-meta">

@@ -5,6 +5,8 @@ Group 8's static, eight-chapter Terminal Assessment website about unequal access
 ## Neon Circuit experience
 
 - Neon cyan/violet technology theme with angular panels, glowing circuits, moving signal trails, a floating learning network, scroll reveals, and chapter progress.
+- Scroll-triggered number count-ups and bar fills share a 1.4-second eased animation, with a short stagger and subtle completion glow. Revisit a chapter or select another solution/comparison to replay. Motion off shows exact final values immediately; turning it back on re-arms the current chapter.
+- Responsive hero spacing keeps metadata labels intact, balances the title with the learning network, and places bottom navigation after the content.
 - Chapter URLs (`#problem`, `#solutions`, `#signal-check`, etc.) support reload, browser Back/Forward, and direct links.
 - Short synthesized digital cues for chapter changes, solution/story/compare selections, and quiz feedback. No sound plays on initial load. **Sound on/off** saves the visitor's preference.
 - **Motion on/off** controls transitions and interface animation. Device reduced-motion preferences override animation settings.

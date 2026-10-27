@@ -793,7 +793,7 @@
       <!-- ============ PAGE 1 · HOME ============ -->
       <section class="page active" data-page aria-label="Home">
         <div class="hero">
-          <p class="kicker">MO-SS033 <span class="dot">·</span> The Contemporary World <span class="dot">·</span> Terminal Assessment <span class="dot">·</span> Group 8</p>
+          <p class="kicker"><span>MO-SS033</span><span>The Contemporary World</span><span>Terminal Assessment</span><span>Group 8</span></p>
           <div class="lab-hero">
             <div class="lab-hero-copy">
               <span class="hero-label">The future of learning is for everyone</span>
@@ -1460,6 +1460,7 @@
 
         function swapPage(i) {
           window.learningLab.stopVideos();
+          lvArmFinal(document);
           current = i;
           window.learningLab.update(i, pages.length, pages[i].getAttribute('aria-label'));
           for (var p = 0; p < pages.length; p++) {
@@ -1478,6 +1479,7 @@
           nextBtn.disabled = i === pages.length - 1;
           pageCount.textContent = 'Page ' + (i + 1) + ' of ' + pages.length;
           window.scrollTo(0, 0);
+          watchMeters(pages[i]);
           var heading = pages[i].querySelector('h1, h2');
           if (heading) { heading.focus({ preventScroll: true }); }
           if (i === 0 && worldMapHandle) {
@@ -1511,140 +1513,111 @@
           showPage(index < 0 ? 0 : index, true);
         });
         document.addEventListener('labmotionchange', function () {
-          reducedMotion = !window.learningLab.moving();
-          if (reducedMotion) lvArmFinal(document);
+          var next = !window.learningLab.moving();
+          if (next === reducedMotion) return;
+          reducedMotion = next;
+          lvArmFinal(document);
+          if (!reducedMotion) watchMeters(pages[current]);
         });
 
-        /* ---------- Level-up meters: scroll-triggered, slow, staggered, play once ---------- */
-        var LV_DUR = 800;      /* bar fill + counter roll, kept in sync */
-        var LV_STAGGER = 100;   /* delay between neighbouring meters entering together */
-        function easeOutCubic(t) { return 1 - Math.pow(1 - t, 3); }
-
-        /* A counter rolls in sync with its bar when the two share one of these
-           visual groups; anything else plays as its own unit. */
-        var LV_GROUP_SEL = '.vs-row, .crit-row, .sc-row, .cmp-col, .stat';
-
-        function lvGroup(el) {
-          var g = el.closest ? el.closest(LV_GROUP_SEL) : null;
-          return g || el;
-        }
+        /* One clock per visual group keeps numbers and fills in sync. */
+        var LV_DUR = 1400;
+        var LV_STAGGER = 120;
+        var lvJobs = new Map();
+        var LV_GROUP_SEL = '.vs-row, .crit-row, .sc-row, .cmp-col, .stat, .meter-summary';
         function lvMetersIn(unit) {
-          var list = [];
-          if (unit.hasAttribute && (unit.hasAttribute('data-fill') || unit.hasAttribute('data-count'))) {
-            list.push(unit);
-          }
-          var found = unit.querySelectorAll('[data-fill], [data-count]');
-          for (var i = 0; i < found.length; i++) { list.push(found[i]); }
-          return list;
+          return unit.matches('[data-fill], [data-count]') ? [unit] :
+            Array.prototype.slice.call(unit.querySelectorAll('[data-fill], [data-count]'));
+        }
+        function lvFinalText(el) {
+          return el.getAttribute('data-final') || Number(el.dataset.count).toFixed(Number(el.dataset.dec || 0));
         }
         function lvSetFinal(el) {
-          if (el.hasAttribute('data-fill')) {
-            el.classList.remove('lv');
-            el.style.width = el.getAttribute('data-fill') + '%';
-          } else {
-            el.textContent = el.getAttribute('data-final') || Number(el.getAttribute('data-count')).toFixed(Number(el.getAttribute('data-dec') || 0));
-          }
+          el.classList.remove('lv', 'count-settle');
+          if (el.hasAttribute('data-fill')) el.style.width = el.dataset.fill + '%';
+          else el.textContent = lvFinalText(el);
         }
-        function lvArm(el) {
-          if (el.hasAttribute('data-fill')) {
-            el.style.width = '0%';
-          } else {
-            var dec = Number(el.getAttribute('data-dec') || 0);
-            el.textContent = (0).toFixed(dec);
-          }
-        }
-        function lvPlayFill(el) {
-          var target = parseFloat(el.getAttribute('data-fill'));
-          el.classList.add('lv');
-          el.style.width = '0%';
-          var start = null;
-          function step(ts) {
-            if (!start) start = ts;
-            if (reducedMotion || !el.isConnected) { lvSetFinal(el); return; }
-            var t = Math.min(1, (ts - start) / LV_DUR);
-            el.style.width = (target * easeOutCubic(t)) + '%';
-            if (t < 1) { window.requestAnimationFrame(step); }
-            else { el.style.width = target + '%'; el.classList.remove('lv'); }
-          }
-          window.requestAnimationFrame(step);
-        }
-        function lvPlayCount(el) { lvSetFinal(el); }
-        function lvPlayUnit(unit) {
-          var meters = lvMetersIn(unit);
-          for (var i = 0; i < meters.length; i++) {
-            if (meters[i].hasAttribute('data-fill')) { lvPlayFill(meters[i]); }
-            else { lvPlayCount(meters[i]); }
-          }
-        }
-
-        var lvObserver = null;
-        var lvQueueUntil = 0;
-        function lvSchedule(unit) {
-          /* Cascade units that surface together, in reading order; a lone
-             unit far down the page plays the moment it is reached. */
-          if (reducedMotion) { lvPlayUnit(unit); return; }
-          var now = Date.now();
-          var startAt = Math.max(now, lvQueueUntil);
-          lvQueueUntil = startAt + LV_STAGGER;
-          var delay = startAt - now;
-          if (delay <= 0) { lvPlayUnit(unit); return; }
-          window.setTimeout(function () { lvPlayUnit(unit); }, delay);
-        }
-        function lvObserve(unit) {
-          if (!lvObserver) { lvPlayUnit(unit); return; }
-          lvObserver.observe(unit);
+        function lvStop(unit, job) {
+          window.clearTimeout(job.timer);
+          window.cancelAnimationFrame(job.frame);
+          if (lvObserver) lvObserver.unobserve(unit);
+          unit.removeAttribute('data-lv-armed');
+          lvMetersIn(unit).forEach(lvSetFinal);
+          lvJobs.delete(unit);
         }
         function lvArmFinal(scope) {
-          var armed = scope.querySelectorAll('[data-lv-armed]');
-          for (var a = 0; a < armed.length; a++) armed[a].removeAttribute('data-lv-armed');
-          var all = scope.querySelectorAll('[data-fill], [data-count]');
-          for (var i = 0; i < all.length; i++) { lvSetFinal(all[i]); }
+          lvJobs.forEach(function (job, unit) {
+            if (!unit.isConnected || scope === document || scope.contains(unit)) lvStop(unit, job);
+          });
+          scope.querySelectorAll('[data-fill], [data-count]').forEach(lvSetFinal);
         }
-        function watchMeters(scope) {
-          var counts = scope.querySelectorAll('[data-count]');
-          for (var c = 0; c < counts.length; c++) lvSetFinal(counts[c]);
-          if (reducedMotion || !('IntersectionObserver' in window)) {
-            lvArmFinal(scope);
+        function lvPlayUnit(unit) {
+          var job = lvJobs.get(unit);
+          if (!job) return;
+          if (reducedMotion || !unit.isConnected || unit.closest('[hidden]')) {
+            lvStop(unit, job);
             return;
           }
-          var all = scope.querySelectorAll('[data-fill]');
-          var units = [];
-          var i, unit;
-          for (i = 0; i < all.length; i++) {
-            lvArm(all[i]);
-            unit = lvGroup(all[i]);
-            unit.setAttribute('data-lv-armed', '1');
-            if (units.indexOf(unit) === -1) { units.push(unit); }
-          }
-          units.sort(function (a, b) {
-            var pos = a.compareDocumentPosition(b);
-            if (pos & Node.DOCUMENT_POSITION_PRECEDING) { return 1; }
-            if (pos & Node.DOCUMENT_POSITION_FOLLOWING) { return -1; }
-            return 0;
+          unit.removeAttribute('data-lv-armed');
+          var meters = lvMetersIn(unit);
+          meters.forEach(function (el) {
+            if (el.hasAttribute('data-fill')) el.classList.add('lv');
           });
-          for (i = 0; i < units.length; i++) { lvObserve(units[i]); }
-        }
-        if (!reducedMotion && 'IntersectionObserver' in window) {
-          lvObserver = new IntersectionObserver(function (entries) {
-            var hits = [];
-            var i;
-            for (i = 0; i < entries.length; i++) {
-              if (entries[i].isIntersecting) { hits.push(entries[i].target); }
+          var start;
+          function step(ts) {
+            if (lvJobs.get(unit) !== job) return;
+            if (reducedMotion || !unit.isConnected || unit.closest('[hidden]')) {
+              lvStop(unit, job);
+              return;
             }
-            hits.sort(function (a, b) {
-              var pos = a.compareDocumentPosition(b);
-              if (pos & Node.DOCUMENT_POSITION_PRECEDING) { return 1; }
-              if (pos & Node.DOCUMENT_POSITION_FOLLOWING) { return -1; }
-              return 0;
+            if (start === undefined) start = ts;
+            var t = Math.min(1, (ts - start) / LV_DUR);
+            var value = 1 - Math.pow(1 - t, 3);
+            meters.forEach(function (el) {
+              if (el.hasAttribute('data-fill')) el.style.width = Number(el.dataset.fill) * value + '%';
+              else el.textContent = (Number(el.dataset.count) * value).toFixed(Number(el.dataset.dec || 0));
             });
-            for (i = 0; i < hits.length; i++) {
-              lvObserver.unobserve(hits[i]);   /* play once, then stay final */
-              hits[i].removeAttribute('data-lv-armed');
-              lvSchedule(hits[i]);
+            if (t < 1) job.frame = window.requestAnimationFrame(step);
+            else {
+              lvStop(unit, job);
+              meters.forEach(function (el) {
+                if (el.hasAttribute('data-count')) el.classList.add('count-settle');
+              });
             }
-          }, { threshold: 0.2, rootMargin: '0px 0px -8% 0px' });
+          }
+          job.frame = window.requestAnimationFrame(step);
         }
-        watchMeters(document);
+        var lvObserver = 'IntersectionObserver' in window ? new IntersectionObserver(function (entries) {
+          var hits = entries.filter(function (entry) { return entry.isIntersecting; });
+          hits.sort(function (a, b) {
+            return a.target.compareDocumentPosition(b.target) & Node.DOCUMENT_POSITION_PRECEDING ? 1 : -1;
+          });
+          hits.forEach(function (entry, index) {
+            var unit = entry.target, job = lvJobs.get(unit);
+            lvObserver.unobserve(unit);
+            if (!job) return;
+            job.timer = window.setTimeout(function () { lvPlayUnit(unit); }, Math.min(index * LV_STAGGER, 480));
+          });
+        }, { threshold: 0.12, rootMargin: '0px 0px -24px 0px' }) : null;
+        function watchMeters(scope) {
+          lvArmFinal(scope);
+          if (reducedMotion || !lvObserver || scope.closest && scope.closest('[hidden]')) return;
+          var units = [];
+          scope.querySelectorAll('[data-fill], [data-count]').forEach(function (el) {
+            var unit = el.closest(LV_GROUP_SEL) || el;
+            if (el.hasAttribute('data-fill')) el.style.width = '0%';
+            else {
+              el.style.minWidth = lvFinalText(el).length + 'ch';
+              el.textContent = (0).toFixed(Number(el.dataset.dec || 0));
+            }
+            if (units.indexOf(unit) === -1) units.push(unit);
+          });
+          units.forEach(function (unit) {
+            unit.setAttribute('data-lv-armed', '1');
+            lvJobs.set(unit, { timer: 0, frame: 0 });
+            lvObserver.observe(unit);
+          });
+        }
 
         function onGotoClick(e) {
           showPage(Number(e.currentTarget.getAttribute('data-goto')));
@@ -1737,8 +1710,8 @@
             '<h3>' + s.name + '</h3>' +
             '<p class="who">' + s.who + '</p>' +
             '<p>' + s.body + '</p>' +
-            '<div class="scorebar" aria-hidden="true"><i data-fill="' + s.pct + '"></i></div>' +
-            '<span class="scorebar-label">Group score <span data-count="' + s.score + '" data-dec="2">' + s.score.toFixed(2) + '</span> / 4.00 · Rank ' + (idx + 1) + ' of 3</span>' +
+            '<div class="meter-summary"><div class="scorebar" aria-hidden="true"><i data-fill="' + s.pct + '"></i></div>' +
+            '<span class="scorebar-label">Group score <span data-count="' + s.score + '" data-dec="2">' + s.score.toFixed(2) + '</span> / 4.00 · Rank ' + (idx + 1) + ' of 3</span></div>' +
             critsHtml +
             '<div class="fact-row">' + factsHtml + '</div>';
           for (var b = 0; b < solBtns.length; b++) {

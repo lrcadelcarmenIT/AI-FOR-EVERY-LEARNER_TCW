@@ -2,9 +2,9 @@
 
 Group 8's static, eight-chapter Terminal Assessment website about unequal access to AI-supported education. Open `index.html`, serve this folder with a static web server, or publish the repository through GitHub Pages. No build step is required.
 
-## Learning Lab experience
+## Neon Circuit experience
 
-- Refined cyan/violet technology theme, responsive layout, learning-network illustration, and chapter progress.
+- Neon cyan/violet technology theme with angular panels, glowing circuits, moving signal trails, a floating learning network, scroll reveals, and chapter progress.
 - Chapter URLs (`#problem`, `#solutions`, `#signal-check`, etc.) support reload, browser Back/Forward, and direct links.
 - Short synthesized digital cues for chapter changes, solution/story/compare selections, and quiz feedback. No sound plays on initial load. **Sound on/off** saves the visitor's preference.
 - **Motion on/off** controls transitions and interface animation. Device reduced-motion preferences override animation settings.

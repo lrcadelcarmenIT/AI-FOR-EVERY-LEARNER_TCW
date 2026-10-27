@@ -96,3 +96,35 @@
     }
   };
 }());
+
+// Restrained circuit motion and progressive section reveals for Neon Circuit.
+(function () {
+  'use strict';
+  var field = document.createElement('div');
+  field.className = 'signal-field';
+  field.setAttribute('aria-hidden','true');
+  for (var i=0;i<18;i++) {
+    var particle=document.createElement('span');
+    particle.className='signal-particle';
+    particle.style.setProperty('--signal-left',((i*37)%100)+'%');
+    particle.style.setProperty('--signal-height',(15+(i%4)*12)+'px');
+    particle.style.setProperty('--signal-duration',(14+i%7*2)+'s');
+    particle.style.setProperty('--signal-delay',(-i*2.3)+'s');
+    field.appendChild(particle);
+  }
+  document.body.prepend(field);
+  document.addEventListener('visibilitychange',function () {document.body.classList.toggle('lab-away',document.hidden);});
+  if (!('IntersectionObserver' in window)) return;
+  var observer=new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.remove('is-pending');
+        observer.unobserve(entry.target);
+      }
+    });
+  },{threshold:.06,rootMargin:'0px 0px 35px 0px'});
+  document.querySelectorAll('.page > .block,.page > .grid,.page > .photo-fig,.page > .group-card').forEach(function (section) {
+    section.classList.add('future-reveal','is-pending');
+    observer.observe(section);
+  });
+}());
